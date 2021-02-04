@@ -46,10 +46,10 @@ function App() {
         <div className="root">
           <Header/>
           <Main 
-            handleEditAvatarClick={handleEditAvatarClick}
-            handleEditProfileClick={handleEditProfileClick}
-            handleAddPlaceClick={handleAddPlaceClick}
-            handleCardClick={handleCardClick}
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
           />
           <Footer/>
         </div>

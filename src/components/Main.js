@@ -25,20 +25,20 @@ function Main(props) {
       <section className="profile">
         <div className="profile__avatar-block">
           <img src={userAvatar} className="profile__avatar" alt="Аватар"/>
-          <button className="button button_type_edite-avatar opacity" aria-label="Редактировать" type="button" onClick={props.handleEditAvatarClick}></button>
+          <button className="button button_type_edite-avatar opacity" aria-label="Редактировать" type="button" onClick={props.onEditAvatar}></button>
         </div>
         <div className="profile__info">
           <div className="profile__full-name-wraper">
             <h1 className="profile__full-name">{userName}</h1>
-            <button className="button button_type_edite-profile opacity" aria-label="Редактировать" type="button" onClick={props.handleEditProfileClick}></button>
+            <button className="button button_type_edite-profile opacity" aria-label="Редактировать" type="button" onClick={props.onEditProfile}></button>
           </div>
           <p className="profile__occupation">{userDescription}</p>
         </div>
-        <button className="button button_type_add-card opacity" aria-label="Добавить карточку" type="button" onClick={props.handleAddPlaceClick}></button>
+        <button className="button button_type_add-card opacity" aria-label="Добавить карточку" type="button" onClick={props.onAddPlace}></button>
       </section>
       <section className="cards">
         <ul className="cards__block">
-          {cards.map(item => <Card key = {item._id} onCardClick={props.handleCardClick} {...item}/>)}
+          {cards.map(item => <Card key = {item._id} onCardClick={props.onCardClick} {...item}/>)}
         </ul>
       </section>
     </main>
