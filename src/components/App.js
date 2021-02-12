@@ -22,7 +22,7 @@ function App() {
   React.useEffect( () => {
     Promise.resolve(api.getUserInfo())
       .then((data) => {
-        console.log(data);
+       //console.log(data);
         setCurrentUser(data);
       });
   }, [])
