@@ -1,21 +1,17 @@
 import React from 'react';
 import api from "../utils/api.js";
 import Card from "./Card";
+import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function Main(props) {
-
-  const [userName, setUserName] = React.useState('');
-  const [userDescription , setUserDescription ] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
+  const currentUser = React.useContext(CurrentUserContext);
+
   React.useEffect( () => {
-    Promise.all([api.getUserInfo(), api.getCards()])
+    Promise.resolve(api.getCards())
       .then((data) => {
-        setUserName(data[0].name)
-        setUserDescription(data[0].about)
-        setUserAvatar(data[0].avatar);
-        setCards(data[1]);
+        setCards(data);
       })
       .catch(error => console.log(error));
   }, []);
@@ -24,15 +20,15 @@ function Main(props) {
     <main className="main">
       <section className="profile">
         <div className="profile__avatar-block">
-          <img src={userAvatar} className="profile__avatar" alt="Аватар"/>
+          <img src={currentUser.avatar} className="profile__avatar" alt="Аватар"/>
           <button className="button button_type_edite-avatar opacity" aria-label="Редактировать" type="button" onClick={props.onEditAvatar}></button>
         </div>
         <div className="profile__info">
           <div className="profile__full-name-wraper">
-            <h1 className="profile__full-name">{userName}</h1>
+            <h1 className="profile__full-name">{currentUser.name}</h1>
             <button className="button button_type_edite-profile opacity" aria-label="Редактировать" type="button" onClick={props.onEditProfile}></button>
           </div>
-          <p className="profile__occupation">{userDescription}</p>
+          <p className="profile__occupation">{currentUser.about}</p>
         </div>
         <button className="button button_type_add-card opacity" aria-label="Добавить карточку" type="button" onClick={props.onAddPlace}></button>
       </section>
