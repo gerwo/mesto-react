@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import api from "../utils/api.js";
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
@@ -53,6 +54,10 @@ function App() {
     setTimeout(() => {
       setSelectedCard({});
     }, 500)
+  }
+
+  function handleAddPlaceSubmit(card) {
+    
   }
 
   function handleCardLike(card) {
@@ -117,26 +122,7 @@ function App() {
           <Footer/>
         </div>
         
-        <PopupWithForm title="Новое место" buttonName="Создать" name="card" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-            <input 
-              type="text" 
-              className="popup__input popup__input_image-title" 
-              name="image-title" 
-              placeholder="Название" 
-              required 
-              minLength="2" 
-              maxLength="30"
-              id="image-title"/>
-            <span id="image-title-error" className="popup__error"></span>
-            <input 
-              type="url" 
-              className="popup__input popup__input_image-link" 
-              name="image-link" 
-              placeholder="Ссылка на картинку" 
-              required
-              id="image-link"/>
-            <span id="image-link-error" className="popup__error"></span>
-        </PopupWithForm>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
 
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/> 
         
