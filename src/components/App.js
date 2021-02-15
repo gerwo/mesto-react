@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from './EditProfilePopup'
 import api from "../utils/api.js";
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
@@ -54,6 +55,14 @@ function App() {
     }, 500)
   }
 
+  function handleUpdateUser({name, about}){
+    Promise.resolve(api.setUserInfo({name, about}))
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups()
+      });
+    }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
@@ -100,28 +109,7 @@ function App() {
           <span id="avatar-error" className="popup__error"></span>
         </PopupWithForm>
         
-        <PopupWithForm title="Редактировать профиль" buttonName="Сохранить" name="profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-          <input 
-            type="text" 
-            className="popup__input popup__input_full-name" 
-            name="name" 
-            placeholder="ФИО" 
-            required 
-            minLength="2" 
-            maxLength="20"
-            id="full-name"/>
-          <span id="full-name-error" className="popup__error"></span>
-          <input 
-            type="text" 
-            className="popup__input popup__input_occupation" 
-            name="occupation" 
-            placeholder="Род деятельности" 
-            required 
-            minLength="2" 
-            maxLength="200"
-            id="occupation"/>
-          <span id="occupation-error" className="popup__error"></span>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/> 
         
         <PopupWithForm title="Вы уверены?" buttonName="Да" name="confirm"></PopupWithForm>
 
