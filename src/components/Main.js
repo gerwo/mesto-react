@@ -38,7 +38,7 @@ function Main(props) {
         <ul className="cards__block">
           {props.cards.map(item => <Card 
             key = {item._id} 
-            onCardDelete={props.onCardDelete} 
+            onConfirmClick={props.onConfirmClick} 
             onCardLike={props.onCardLike} 
             onCardClick={props.onCardClick} 
             {...item}/>)}

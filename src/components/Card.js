@@ -22,11 +22,12 @@ function Card(props) {
   }
 
   function handleLikeClick() {
-    props.onCardLike(props)
+    props.onCardLike(props);
   }
 
   function handleDeleteClick(){
-    props.onCardDelete(props)
+    console.log(props)
+    props.onConfirmClick(props);
   }
 
   return (
