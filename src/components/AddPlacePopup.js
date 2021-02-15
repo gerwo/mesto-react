@@ -1,26 +1,28 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import {CurrentUserContext} from '../contexts/CurrentUserContext';
-
 
 function AddPlacePopup(props) {
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const [name, setName] = React.useState();
+  const [link, setLink] = React.useState();
 
-  const nameRef = React.useRef();
-  const linkRef = React.useRef();
+  function handleChangeName(e) {
+    setName(e.target.value)
+  }
 
+  function handleChangeLink(e) {
+    setLink(e.target.value)
+  }
 
   function handleSubmit(e){
     e.preventDefault();
     
-    props.onAddPlace({
-      name: nameRef.current.value,
-      link : linkRef.current.value
-    });
+    props.onAddPlace({name,link});  
 
-    nameRef.current.value = '';
-    linkRef.current.value = '';
+    setTimeout(() => {
+      setName('');
+      setLink('');
+    }, 700)
   }
 
   return (
@@ -31,8 +33,10 @@ function AddPlacePopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit= {handleSubmit}>
+      
       <input 
-        ref={nameRef}
+        value={name}
+        onChange={handleChangeName}
         type="text" 
         className="popup__input popup__input_image-title" 
         name="image-title" 
@@ -44,7 +48,8 @@ function AddPlacePopup(props) {
       <span id="image-title-error" className="popup__error"></span>
       
       <input 
-        ref={linkRef}
+        value={link}
+        onChange={handleChangeLink}
         type="url" 
         className="popup__input popup__input_image-link" 
         name="image-link" 

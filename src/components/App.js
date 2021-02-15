@@ -56,27 +56,6 @@ function App() {
     }, 500)
   }
 
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    
-    api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-        
-        setCards(newCards);
-    });
-  }
-
-  function handleCardDelete(card) {
-    
-    api.deleteCard(card._id)
-      .then(() => {
-        const newCards = cards.filter((c) => c._id !== card._id);
-        
-        setCards(newCards);
-    });
-  }
-
   React.useEffect(() => {
     Promise.resolve(api.getCards())
       .then((data) => {
@@ -85,12 +64,36 @@ function App() {
       .catch(error => console.log(error));
   }, []);
 
+  
   function handleAddPlaceSubmit({name, link}) {
     Promise.resolve(api.addCard({name, link}))
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups()
     }).catch(error => console.log(error));
+  }
+
+  function handleCardDelete(card) {
+    console.log(card)
+    Promise.resolve(api.deleteCard({cardId : card._id}))
+      .then((data) => {
+        const newCards = cards.filter((c) => c._id !== card._id);
+        
+        setCards(newCards);
+      }).catch(error => console.log(error));
+  }
+
+  
+  function handleCardLike(card) {
+    
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    Promise.resolve(api.changeLikeCardStatus({cardId : card._id, isLiked: !isLiked}))
+      .then((newCard) => {
+        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+        
+        setCards(newCards);
+      }).catch(error => console.log(error));
   }
 
   function handleUpdateAvatar({avatar}) {
