@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api.js";
-import CurrentUserContext from '../contexts/CurrentUserContext'
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function App() {
 
@@ -17,12 +17,11 @@ function App() {
   const [isImagePopupOpen, setImagePopup] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState(CurrentUserContext);
 
   React.useEffect( () => {
     Promise.resolve(api.getUserInfo())
       .then((data) => {
-       //console.log(data);
         setCurrentUser(data);
       });
   }, [])
