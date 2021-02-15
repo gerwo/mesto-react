@@ -4,13 +4,12 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import EditProfilePopup from './EditProfilePopup'
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import api from "../utils/api.js";
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
-function App() {
-
-  
+function App() { 
 
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
@@ -55,13 +54,21 @@ function App() {
     }, 500)
   }
 
+  function handleUpdateAvatar({avatar}) {
+    Promise.resolve(api.setUserAvatar({avatar}))
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      });
+  }
+
   function handleUpdateUser({name, about}){
     Promise.resolve(api.setUserInfo({name, about}))
       .then((data) => {
         setCurrentUser(data);
-        closeAllPopups()
+        closeAllPopups();
       });
-    }
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -97,17 +104,8 @@ function App() {
               id="image-link"/>
             <span id="image-link-error" className="popup__error"></span>
         </PopupWithForm>
-        
-        <PopupWithForm title="Обновить аватар" buttonName="Сохранить" name="avatar" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          <input 
-            type="url" 
-            className="popup__input popup__input_avatar-link" 
-            name="avatar" 
-            placeholder="Ссылка на картинку" 
-            required
-            id="avatar"/>
-          <span id="avatar-error" className="popup__error"></span>
-        </PopupWithForm>
+
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/> 
         
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/> 
         

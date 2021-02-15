@@ -1,5 +1,4 @@
 function PopupWithForm(props) {
-
   return (
     <div className={`popup popup__${props.name} ${props.isOpen ? 'popup_opened' : ''}`} role="dialog" >
       <div className="popup__container">

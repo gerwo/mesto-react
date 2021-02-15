@@ -1,11 +1,9 @@
-import React, { useDebugValue } from 'react';
+import React from 'react';
 import PopupWithForm from "./PopupWithForm";
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 
 function EditProfilePopup(props) {
-  
-  console.log(props)
 
   const [name, setName] = React.useState();
   const [description, setDescription] = React.useState();
@@ -40,7 +38,7 @@ function EditProfilePopup(props) {
       buttonName="Сохранить" 
       name="profile" 
       isOpen={props.isOpen} 
-      onClose={props.closeAllPopups}
+      onClose={props.onClose}
       onSubmit={handleSubmit}>
       <input 
         type="text" 
