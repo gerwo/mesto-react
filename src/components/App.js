@@ -16,6 +16,7 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setImagePopup] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+  const [cards, setCards] = React.useState([]);
 
   const [currentUser, setCurrentUser] = React.useState(CurrentUserContext);
 
@@ -54,6 +55,35 @@ function App() {
     }, 500)
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+        
+        setCards(newCards);
+    });
+  }
+
+  function handleCardDelete(card) {
+    
+    api.deleteCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((c) => c._id !== card._id);
+        
+        setCards(newCards);
+    });
+  }
+
+  React.useEffect( () => {
+    Promise.resolve(api.getCards())
+      .then((data) => {
+        setCards(data);
+      })
+      .catch(error => console.log(error));
+  }, []);
+
   function handleUpdateAvatar({avatar}) {
     Promise.resolve(api.setUserAvatar({avatar}))
       .then((data) => {
@@ -80,6 +110,9 @@ function App() {
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
           <Footer/>
         </div>
