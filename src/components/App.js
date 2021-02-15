@@ -56,10 +56,6 @@ function App() {
     }, 500)
   }
 
-  function handleAddPlaceSubmit(card) {
-    
-  }
-
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     
@@ -81,7 +77,7 @@ function App() {
     });
   }
 
-  React.useEffect( () => {
+  React.useEffect(() => {
     Promise.resolve(api.getCards())
       .then((data) => {
         setCards(data);
@@ -89,12 +85,20 @@ function App() {
       .catch(error => console.log(error));
   }, []);
 
+  function handleAddPlaceSubmit({name, link}) {
+    Promise.resolve(api.addCard({name, link}))
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups()
+    }).catch(error => console.log(error));
+  }
+
   function handleUpdateAvatar({avatar}) {
     Promise.resolve(api.setUserAvatar({avatar}))
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
-      });
+      }).catch(error => console.log(error));
   }
 
   function handleUpdateUser({name, about}){
@@ -102,7 +106,7 @@ function App() {
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
-      });
+      }).catch(error => console.log(error));
   }
 
   return (
