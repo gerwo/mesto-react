@@ -15,4 +15,6 @@
 * NPM: Webpack, Babel,
 * JavaScript (ES6+)
 * React
+* React Hooks
+* GitHub Pages
 
