@@ -5,22 +5,22 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function EditProfilePopup(props) {
 
-  const [name, setName] = React.useState();
-  const [description, setDescription] = React.useState();
+  const [name, setName] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
+    setName(currentUser.name || '');
+    setDescription(currentUser.about || '');
   }, [currentUser]);
 
   function handleChangeName(e) {
-    setName(e.target.value)
+    setName(e.target.value);
   }
 
   function handleChangeAbout(e) {
-    setDescription(e.target.value)
+    setDescription(e.target.value);
   }
 
   function handleSubmit(e) {
@@ -39,7 +39,9 @@ function EditProfilePopup(props) {
       name="profile" 
       isOpen={props.isOpen} 
       onClose={props.onClose}
-      onSubmit={handleSubmit}>
+      isLoading={props.isLoading}
+      onSubmit={handleSubmit}
+      loadingButtonTitle = 'Сохранение...'>
       <input 
         type="text" 
         className="popup__input popup__input_full-name" 

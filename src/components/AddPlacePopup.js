@@ -3,21 +3,21 @@ import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup(props) {
 
-  const [name, setName] = React.useState();
-  const [link, setLink] = React.useState();
+  const [name, setName] = React.useState('');
+  const [link, setLink] = React.useState('');
 
   function handleChangeName(e) {
-    setName(e.target.value)
+    setName(e.target.value);
   }
 
   function handleChangeLink(e) {
-    setLink(e.target.value)
+    setLink(e.target.value);
   }
 
   function handleSubmit(e){
     e.preventDefault();
     
-    props.onAddPlace({name,link});  
+    props.onAddPlace({name, link});  
 
     setTimeout(() => {
       setName('');
@@ -32,8 +32,9 @@ function AddPlacePopup(props) {
       name="card"
       isOpen={props.isOpen}
       onClose={props.onClose}
-      onSubmit= {handleSubmit}>
-      
+      isLoading={props.isLoading}
+      onSubmit= {handleSubmit}
+      loadingButtonTitle = 'Сохранение...'>
       <input 
         value={name}
         onChange={handleChangeName}

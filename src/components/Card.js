@@ -26,7 +26,7 @@ function Card(props) {
   }
 
   function handleDeleteClick(){
-    console.log(props)
+    //console.log(props);
     props.onConfirmClick(props);
   }
 

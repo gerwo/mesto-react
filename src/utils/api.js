@@ -35,10 +35,7 @@ class Api{
     return fetch(`${this._url}/users/me`, {
         method: 'PATCH',
         headers: this._headers,
-        body : JSON.stringify({
-          name: name,
-          about : about 
-        })
+        body : JSON.stringify({name, about})
       })
       .then(result => this._getResponseData({result}));
   }
@@ -47,9 +44,7 @@ class Api{
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body : JSON.stringify({
-        avatar : avatar 
-      })
+      body : JSON.stringify({avatar})
     })
       .then(result => this._getResponseData({result}));
   }

@@ -5,7 +5,6 @@ function ConfirmPopup(props){
 
   function handleSubmit(e) {
     e.preventDefault();
-    //console.log(props)
     props.onConfirm(props);
   }
 
@@ -16,7 +15,9 @@ function ConfirmPopup(props){
       name="confirm" 
       isOpen={props.isOpen} 
       onClose={props.onClose}
+      isLoading={props.isLoading}
       onSubmit={handleSubmit}
+      loadingButtonTitle = 'Удаление...'
       >
     </PopupWithForm>
   );
