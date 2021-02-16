@@ -55,6 +55,7 @@ function App() {
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setImagePopup(false);
+    setConfirmPopup(false);
 
     setTimeout(() => {
       setSelectedCard({});
@@ -78,20 +79,19 @@ function App() {
   }
 
   function handleCardConfirmDelete(card){
-
-    console.log(card)
-
-    //handleCardDelete(card);
+    setSelectedCard(card);
+    handleConfirmClick();
   }
 
-  function handleCardDelete(card) {
-
-    Promise.resolve(api.deleteCard({cardId : card._id}))
+  function handleCardDelete() {
+    Promise.resolve(api.deleteCard({cardId : selectedCard._id}))
       .then((data) => {
-        const newCards = cards.filter((c) => c._id !== card._id);
+        const newCards = cards.filter((c) => c._id !== selectedCard._id);
         
         setCards(newCards);
-        closeAllPopups()
+        closeAllPopups();
+        setSelectedCard({});
+
       }).catch(error => console.log(error));
   }
   
@@ -131,7 +131,7 @@ function App() {
           <Main 
             onEditProfile={handleEditProfileClick}
             onEditAvatar={handleEditAvatarClick}
-            onConfirmClick={handleConfirmClick}
+            onConfirmClick={handleCardConfirmDelete}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
@@ -148,7 +148,7 @@ function App() {
 
         <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups}/>
 
-        <ConfirmPopup isOpen={isConfirmPopupOpen} onClose={closeAllPopups} onConfirm={handleCardConfirmDelete} />
+        <ConfirmPopup isOpen={isConfirmPopupOpen} onClose={closeAllPopups} onConfirm={handleCardDelete} />
 
       </div>
     </CurrentUserContext.Provider>
