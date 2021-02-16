@@ -8,6 +8,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmPopup from './ConfirmPopup';
 import api from "../utils/api.js";
+import useEventListener from '@use-it/event-listener';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function App() { 
@@ -56,6 +57,10 @@ function App() {
     handleConfirmClick();
   }
 
+  function handlePressEsc({ key }) {
+    if(key === 'Escape') closeAllPopups()
+  }
+
   function closeAllPopups() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -66,7 +71,7 @@ function App() {
     setTimeout(() => {
       setLoading(false);
       setSelectedCard({});
-    }, 500)
+    }, 700)
   }
 
   React.useEffect(() => {
@@ -131,6 +136,8 @@ function App() {
         closeAllPopups();
       }).catch(error => console.log(error));
   }
+
+  useEventListener('keydown', handlePressEsc);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
