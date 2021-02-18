@@ -1,6 +1,6 @@
 # Mesto - React
 
-Проект ["Mesto"](https://gerwo.github.io/mesto-react/) - это первый мой проект в котором я использовать React. 
+Проект ["Mesto"](https://gerwo.github.io/mesto-react/) - это первый мой проект в котором я использовал React. 
 
 Данный проект из Яндекс Практикум.
 
